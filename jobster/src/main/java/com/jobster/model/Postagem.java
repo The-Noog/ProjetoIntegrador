@@ -20,7 +20,7 @@ public class Postagem {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_postagem;
+	private Long idPostagem;
 	
 	@Column
 	private String contato;
@@ -35,19 +35,15 @@ public class Postagem {
 	private Blob imagem;
 	
 	@ManyToOne
-	@JoinColumn(name="id_tema")
+	@JoinColumn(name="id")
 	private Tema tema;
-	
-	@ManyToOne
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
 
-	public Long getId_postagem() {
-		return id_postagem;
+	public Long getIdPostagem() {
+		return idPostagem;
 	}
 
-	public void setId_postagem(Long id_postagem) {
-		this.id_postagem = id_postagem;
+	public void setIdPostagem(Long idPostagem) {
+		this.idPostagem = idPostagem;
 	}
 
 	public String getContato() {
@@ -82,4 +78,13 @@ public class Postagem {
 		this.imagem = imagem;
 	}
 
+	public Tema getTema() { 
+		return tema;
+	}
+
+	public void setTema(Tema tema) {
+		this.tema = tema;
+	}
+	
+	
 }
