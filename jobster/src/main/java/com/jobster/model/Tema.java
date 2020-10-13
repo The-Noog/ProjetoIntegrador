@@ -2,6 +2,8 @@ package com.jobster.model;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +15,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@Entity
 @Table(name="tema")
 public class Tema {
 	
@@ -29,8 +33,8 @@ public class Tema {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 	
-	@OneToMany
-	@JoinColumn(name="id") 
+	@OneToMany(mappedBy = "tema", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("tema")
 	private List<Postagem> postagem;
 
 	public Long getId() {
@@ -50,7 +54,7 @@ public class Tema {
 	}
 
 	public String getDescricao() {
-		return descricao; 
+		return descricao;
 	}
 
 	public void setDescricao(String descricao) {
@@ -73,7 +77,4 @@ public class Tema {
 		this.postagem = postagem;
 	}
 	
-	
-	
-
 }

@@ -3,6 +3,7 @@ package com.jobster.model;
 import java.sql.Blob;
 
 import javax.annotation.Generated;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,9 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ManyToAny;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="postagem")
@@ -20,7 +24,7 @@ public class Postagem {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idPostagem;
+	private Long id;
 	
 	@Column
 	private String contato;
@@ -35,15 +39,20 @@ public class Postagem {
 	private Blob imagem;
 	
 	@ManyToOne
-	@JoinColumn(name="id")
+	@JsonIgnoreProperties("tema")
 	private Tema tema;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("usuario")
+	private Usuario usuario;
 
-	public Long getIdPostagem() {
-		return idPostagem;
+	
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdPostagem(Long idPostagem) {
-		this.idPostagem = idPostagem;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getContato() {
@@ -78,13 +87,20 @@ public class Postagem {
 		this.imagem = imagem;
 	}
 
-	public Tema getTema() { 
+	public Tema getTema() {
 		return tema;
 	}
 
 	public void setTema(Tema tema) {
 		this.tema = tema;
 	}
-	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
 }
