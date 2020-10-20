@@ -1,4 +1,4 @@
-package com.jobster.security;
+package com.jobster.seguranca;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,15 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class BasicSecurityConfig extends WebSecurityConfigurerAdapter{
-
-	@Autowired
+	
+	@Autowired 
 	private UserDetailsService userDetailsService;
 	
 	@Override
-	protected void configure (AuthenticationManagerBuilder auth) throws Exception{
-		
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		auth.userDetailsService(userDetailsService);
-				
 	}
 	
 	@Bean
@@ -32,16 +30,17 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 	
 	@Override
-	protected void configure (HttpSecurity http) throws Exception{
+	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests()
 		.antMatchers("/usuario/logar").permitAll()
 		.antMatchers("/usuario/cadastrar").permitAll()
-		.anyRequest().authenticated()		
-		.and().httpBasic()		
+		.anyRequest().authenticated()
+		.and().httpBasic()
 		.and().sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().cors()
-		.and().csrf().disable();		
+		.and().csrf().disable();
 	}
-	
+
+
 }

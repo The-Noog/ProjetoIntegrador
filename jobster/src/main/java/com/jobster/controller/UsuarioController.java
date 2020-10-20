@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,28 +22,26 @@ import com.jobster.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuario")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsuarioController {
 	
-	//Controller Service
 	@Autowired
 	private UsuarioService usuarioService;
 	
 	@PostMapping("/logar")
-	public ResponseEntity<UsuarioLogin> Authentication(@RequestBody Optional <UsuarioLogin> user){
+	public ResponseEntity<UsuarioLogin> Autentication(@RequestBody Optional<UsuarioLogin> user) {
 		return usuarioService.Logar(user).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
+	
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Usuario> post(@RequestBody Usuario usuario){
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.CadastrarUsuario(usuario));
+	public ResponseEntity<Usuario> post(@RequestBody Usuario usuario) {
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(usuarioService.CadastrarUsuario(usuario));
 	}
 	
-		
-	// Controller Repository
 	@Autowired
 	private UsuarioRepository repository;
-		
+	
 	@GetMapping
 	public ResponseEntity<List<Usuario>> getAll(){
 		return ResponseEntity.ok(repository.findAll());
@@ -62,10 +59,10 @@ public class UsuarioController {
 		return ResponseEntity.ok(repository.findByNomeContainingIgnoreCase(nome));
 	}
 	
-//////	@PostMapping
-////	public ResponseEntity<Usuario> postUsuario(@RequestBody Usuario usuario){
-//		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(usuario));
-//	}
+	@PostMapping
+	public ResponseEntity<Usuario> postUsuario(@RequestBody Usuario usuario){
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(usuario));
+	}
 	
 	@PutMapping("/{id_usuario}")
 	public ResponseEntity<Usuario> putUsuario(@PathVariable Long id, @RequestBody Usuario usuario){

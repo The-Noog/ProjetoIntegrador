@@ -1,4 +1,4 @@
-package com.jobster.security;
+package com.jobster.seguranca;
 
 import java.util.Optional;
 
@@ -13,17 +13,18 @@ import com.jobster.repository.UsuarioRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
-
+	
 	@Autowired
-	private UsuarioRepository usuariorep;
+	private UsuarioRepository userRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		Optional <Usuario> user = usuariorep.findByEmail(userName);
-		user.orElseThrow(()-> new UsernameNotFoundException(userName + "Not Found"));
+		
+		Optional<Usuario> user = userRepository.findByEmail(userName);
+		user.orElseThrow(()-> new UsernameNotFoundException(userName +"Not found"));
 		return user.map(UserDetailsImpl::new).get();
 	}
 	
 	
+
 }
